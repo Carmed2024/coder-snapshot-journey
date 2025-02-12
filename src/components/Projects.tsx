@@ -1,4 +1,3 @@
-
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -32,29 +31,29 @@ const projects = [
 
 export const Projects = () => {
   return (
-    <section className="py-20 px-4 bg-soft-gray" id="projects">
+    <section className="py-20 px-4 bg-soft-gray dark:bg-background" id="projects">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 animate-fade-up">
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple inline-block">
+          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple dark:bg-dark-purple inline-block">
             Portfolio
           </span>
-          <h2 className="text-3xl font-bold mt-4">Featured Projects</h2>
+          <h2 className="text-3xl font-bold mt-4 dark:text-white">Featured Projects</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <Card
               key={project.title}
-              className="overflow-hidden backdrop-blur-sm bg-white/50 hover:bg-white/80 transition-colors animate-fade-up"
+              className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors animate-fade-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="p-6">
-                <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">{project.description}</p>
+                <h3 className="font-semibold text-lg mb-2 dark:text-white">{project.title}</h3>
+                <p className="text-muted-foreground dark:text-muted-dark mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 rounded-full bg-soft-blue text-sm"
+                      className="px-3 py-1 rounded-full bg-soft-blue dark:bg-dark-blue text-sm dark:text-white"
                     >
                       {tech}
                     </span>
@@ -62,13 +61,13 @@ export const Projects = () => {
                 </div>
                 <div className="flex gap-4">
                   <Button variant="outline" size="sm" asChild>
-                    <a href={project.github}>
+                    <a href={project.github} className="dark:text-white">
                       <Github className="w-4 h-4 mr-2" />
                       Code
                     </a>
                   </Button>
                   <Button variant="outline" size="sm" asChild>
-                    <a href={project.demo}>
+                    <a href={project.demo} className="dark:text-white">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Demo
                     </a>

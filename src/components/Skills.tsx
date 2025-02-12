@@ -22,7 +22,7 @@ const skills = [
 
 export const Skills = () => {
   return (
-    <section className="py-20 px-4" id="skills">
+    <section className="py-20 px-4 bg-slate-100 dark:bg-background" id="skills">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 animate-fade-up">
           <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-blue inline-block">
