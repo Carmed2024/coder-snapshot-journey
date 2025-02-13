@@ -10,7 +10,11 @@ import { Footer } from "@/components/Footer";
 const Index = () => {
   return (
     <div className="relative min-h-screen">
-      <div className="animated-background" />
+      <div className="animated-background">
+        {[...Array(15)].map((_, i) => (
+          <div key={i} className="firefly" />
+        ))}
+      </div>
       <div className="relative z-10">
         <Navigation />
         <Hero />
