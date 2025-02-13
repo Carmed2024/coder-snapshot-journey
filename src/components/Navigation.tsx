@@ -112,16 +112,19 @@ export const Navigation = () => {
             <Toggle
               pressed={theme === 'dark'}
               onPressedChange={toggleTheme}
-              size="sm"
-              className="relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+              className="relative inline-flex h-7 w-[52px] shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-muted transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-zinc-800 data-[state=unchecked]:bg-zinc-200"
             >
-              <div className="p-1">
+              <span
+                className={`${
+                  theme === 'dark' ? 'translate-x-0' : 'translate-x-[26px]'
+                } pointer-events-none flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out`}
+              >
                 {theme === 'dark' ? (
-                  <Moon className="h-4 w-4 text-primary" />
+                  <Moon className="h-3.5 w-3.5 text-zinc-800" />
                 ) : (
-                  <Sun className="h-4 w-4 text-primary" />
+                  <Sun className="h-3.5 w-3.5 text-orange-500" />
                 )}
-              </div>
+              </span>
             </Toggle>
             <Button>{t('nav.downloadCV')}</Button>
           </div>
