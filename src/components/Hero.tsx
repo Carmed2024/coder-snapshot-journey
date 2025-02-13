@@ -17,7 +17,7 @@ export const Hero = () => {
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 text-right">
               Building digital experiences that combine technical excellence
-              with creative innovation with AI.
+              with creative innovation.
             </p>
             {/* <div className="pt-4">
               <Button size="lg" className="shadow-lg">
