@@ -85,13 +85,17 @@ export const Navigation = () => {
               ))}
             </div>
 
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="w-9 px-0">
                   <Globe className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent
+                align="end"
+                className="bg-background/95 backdrop-blur-sm"
+                sideOffset={8}
+              >
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.code}
