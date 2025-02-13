@@ -1,0 +1,11 @@
+
+{
+  "nav": {
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "reviews": "Reseñas",
+    "contact": "Contacto",
+    "downloadCV": "Descargar CV"
+  }
+}

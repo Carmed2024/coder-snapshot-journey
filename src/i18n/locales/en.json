@@ -1,0 +1,11 @@
+
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "reviews": "Reviews",
+    "contact": "Contact",
+    "downloadCV": "Download CV"
+  }
+}
