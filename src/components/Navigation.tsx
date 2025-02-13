@@ -1,17 +1,31 @@
+
 import { Button } from './ui/button';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Globe } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Toggle } from './ui/toggle';
+import { useTranslation } from 'react-i18next';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navigation = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Reviews', href: '#reviews' },
-  { name: 'Contact', href: '#contact' }
+  { name: 'nav.about', href: '#about' },
+  { name: 'nav.skills', href: '#skills' },
+  { name: 'nav.projects', href: '#projects' },
+  { name: 'nav.reviews', href: '#reviews' },
+  { name: 'nav.contact', href: '#contact' }
+];
+
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' }
 ];
 
 export const Navigation = () => {
+  const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -24,7 +38,13 @@ export const Navigation = () => {
     const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
     setTheme(initialTheme);
     applyTheme(initialTheme);
-  }, []);
+
+    // Check for saved language preference
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
   const applyTheme = (newTheme: 'light' | 'dark') => {
     const root = window.document.documentElement;
@@ -39,6 +59,11 @@ export const Navigation = () => {
     applyTheme(newTheme);
   };
 
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    localStorage.setItem('language', langCode);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
@@ -48,17 +73,38 @@ export const Navigation = () => {
           </span>
 
           <div className="flex items-center gap-4">
-          <div className=" space-x-8 mr-6">
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
+            <div className="space-x-8 mr-6">
+              {navigation.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
+                >
+                  {t(item.name)}
+                </a>
+              ))}
+            </div>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="w-9 px-0">
+                  <Globe className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {languages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang.code)}
+                    className="cursor-pointer"
+                  >
+                    <span className="mr-2">{lang.flag}</span>
+                    {lang.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Toggle
               pressed={theme === 'dark'}
               onPressedChange={toggleTheme}
@@ -73,7 +119,7 @@ export const Navigation = () => {
                 )}
               </div>
             </Toggle>
-            <Button>Download CV</Button>
+            <Button>{t('nav.downloadCV')}</Button>
           </div>
         </div>
       </div>
