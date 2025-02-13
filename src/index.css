@@ -155,13 +155,26 @@
   animation: drift 8s ease alternate infinite, flash 5s ease infinite;
 }
 
+/* Individual firefly animations */
+.firefly:nth-child(1) { animation: move1 20s ease alternate infinite; }
+.firefly:nth-child(2) { animation: move2 20s ease alternate infinite; }
+.firefly:nth-child(3) { animation: move3 20s ease alternate infinite; }
+.firefly:nth-child(4) { animation: move4 20s ease alternate infinite; }
+.firefly:nth-child(5) { animation: move5 20s ease alternate infinite; }
+.firefly:nth-child(6) { animation: move6 20s ease alternate infinite; }
+.firefly:nth-child(7) { animation: move7 20s ease alternate infinite; }
+.firefly:nth-child(8) { animation: move8 20s ease alternate infinite; }
+.firefly:nth-child(9) { animation: move9 20s ease alternate infinite; }
+.firefly:nth-child(10) { animation: move10 20s ease alternate infinite; }
+.firefly:nth-child(11) { animation: move11 20s ease alternate infinite; }
+.firefly:nth-child(12) { animation: move12 20s ease alternate infinite; }
+.firefly:nth-child(13) { animation: move13 20s ease alternate infinite; }
+.firefly:nth-child(14) { animation: move14 20s ease alternate infinite; }
+.firefly:nth-child(15) { animation: move15 20s ease alternate infinite; }
+
 @keyframes drift {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes flash {
@@ -175,34 +188,131 @@
   }
 }
 
-/* Generate 15 unique firefly animations */
-@for $i from 1 through 15 {
-  .firefly:nth-child(#{$i}) {
-    animation: move#{$i} 20s ease alternate infinite;
-  }
-  
-  @keyframes move#{$i} {
-    @for $step from 0 through 20 {
-      #{$step * 5%} {
-        transform: translate(
-          calc(random(100) * 1vw - 50vw),
-          calc(random(100) * 1vh - 50vh)
-        );
-      }
-    }
-  }
+/* Predefined movement patterns for fireflies */
+@keyframes move1 { 
+  0% { transform: translate(15vw, -20vh); }
+  25% { transform: translate(-30vw, 15vh); }
+  50% { transform: translate(20vw, 25vh); }
+  75% { transform: translate(-15vw, -10vh); }
+  100% { transform: translate(25vw, 20vh); }
+}
+
+@keyframes move2 {
+  0% { transform: translate(-25vw, 15vh); }
+  25% { transform: translate(20vw, -25vh); }
+  50% { transform: translate(-10vw, 20vh); }
+  75% { transform: translate(30vw, -15vh); }
+  100% { transform: translate(-20vw, 25vh); }
+}
+
+@keyframes move3 {
+  0% { transform: translate(20vw, 25vh); }
+  25% { transform: translate(-15vw, -20vh); }
+  50% { transform: translate(25vw, 15vh); }
+  75% { transform: translate(-20vw, 25vh); }
+  100% { transform: translate(15vw, -15vh); }
+}
+
+@keyframes move4 {
+  0% { transform: translate(-15vw, -25vh); }
+  25% { transform: translate(25vw, 20vh); }
+  50% { transform: translate(-20vw, -15vh); }
+  75% { transform: translate(15vw, 25vh); }
+  100% { transform: translate(-25vw, -20vh); }
+}
+
+@keyframes move5 {
+  0% { transform: translate(25vw, 15vh); }
+  25% { transform: translate(-20vw, -25vh); }
+  50% { transform: translate(15vw, 20vh); }
+  75% { transform: translate(-25vw, -15vh); }
+  100% { transform: translate(20vw, 25vh); }
+}
+
+@keyframes move6 {
+  0% { transform: translate(-20vw, 25vh); }
+  25% { transform: translate(25vw, -15vh); }
+  50% { transform: translate(-15vw, 20vh); }
+  75% { transform: translate(20vw, -25vh); }
+  100% { transform: translate(-25vw, 15vh); }
+}
+
+@keyframes move7 {
+  0% { transform: translate(15vw, -15vh); }
+  25% { transform: translate(-25vw, 20vh); }
+  50% { transform: translate(20vw, -25vh); }
+  75% { transform: translate(-15vw, 15vh); }
+  100% { transform: translate(25vw, -20vh); }
+}
+
+@keyframes move8 {
+  0% { transform: translate(-25vw, 20vh); }
+  25% { transform: translate(15vw, -15vh); }
+  50% { transform: translate(-20vw, 25vh); }
+  75% { transform: translate(25vw, -20vh); }
+  100% { transform: translate(-15vw, 15vh); }
+}
+
+@keyframes move9 {
+  0% { transform: translate(20vw, -25vh); }
+  25% { transform: translate(-15vw, 15vh); }
+  50% { transform: translate(25vw, -20vh); }
+  75% { transform: translate(-20vw, 25vh); }
+  100% { transform: translate(15vw, -15vh); }
+}
+
+@keyframes move10 {
+  0% { transform: translate(-15vw, 15vh); }
+  25% { transform: translate(25vw, -20vh); }
+  50% { transform: translate(-20vw, 25vh); }
+  75% { transform: translate(15vw, -15vh); }
+  100% { transform: translate(-25vw, 20vh); }
+}
+
+@keyframes move11 {
+  0% { transform: translate(25vw, -20vh); }
+  25% { transform: translate(-20vw, 25vh); }
+  50% { transform: translate(15vw, -15vh); }
+  75% { transform: translate(-25vw, 20vh); }
+  100% { transform: translate(20vw, -25vh); }
+}
+
+@keyframes move12 {
+  0% { transform: translate(-20vw, 25vh); }
+  25% { transform: translate(15vw, -15vh); }
+  50% { transform: translate(-25vw, 20vh); }
+  75% { transform: translate(20vw, -25vh); }
+  100% { transform: translate(-15vw, 15vh); }
+}
+
+@keyframes move13 {
+  0% { transform: translate(15vw, -15vh); }
+  25% { transform: translate(-25vw, 20vh); }
+  50% { transform: translate(20vw, -25vh); }
+  75% { transform: translate(-15vw, 15vh); }
+  100% { transform: translate(25vw, -20vh); }
+}
+
+@keyframes move14 {
+  0% { transform: translate(-25vw, 20vh); }
+  25% { transform: translate(20vw, -25vh); }
+  50% { transform: translate(-15vw, 15vh); }
+  75% { transform: translate(25vw, -20vh); }
+  100% { transform: translate(-20vw, 25vh); }
+}
+
+@keyframes move15 {
+  0% { transform: translate(20vw, -25vh); }
+  25% { transform: translate(-15vw, 15vh); }
+  50% { transform: translate(25vw, -20vh); }
+  75% { transform: translate(-20vw, 25vh); }
+  100% { transform: translate(15vw, -15vh); }
 }
 
 @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .glass-effect {
