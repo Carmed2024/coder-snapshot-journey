@@ -11,79 +11,83 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import debounce from 'lodash/debounce';
+import { type NavigationItem, type LanguageOption, type ThemeType } from '@/types';
 
-const navigation = [
+const navigation: readonly NavigationItem[] = [
   { name: 'nav.about', href: '#about', sectionId: 'about' },
   { name: 'nav.skills', href: '#skills', sectionId: 'skills' },
   { name: 'nav.projects', href: '#projects', sectionId: 'projects' },
   { name: 'nav.reviews', href: '#reviews', sectionId: 'reviews' },
   { name: 'nav.contact', href: '#contact', sectionId: 'contact' }
-];
+] as const;
 
-const languages = [
+const languages: readonly LanguageOption[] = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'es', name: 'Español', flag: '🇪🇸' }
-];
+] as const;
 
-export const Navigation = () => {
+export const Navigation = (): JSX.Element => {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [activeSection, setActiveSection] = useState('');
+  const [theme, setTheme] = useState<ThemeType>('light');
+  const [activeSection, setActiveSection] = useState<string>('');
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+  useEffect((): void => {
+    const savedTheme = localStorage.getItem('theme') as ThemeType | null;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    const initialTheme: ThemeType = savedTheme || (prefersDark ? 'dark' : 'light');
     setTheme(initialTheme);
     applyTheme(initialTheme);
 
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage) {
-      i18n.changeLanguage(savedLanguage);
+      void i18n.changeLanguage(savedLanguage);
     }
   }, [i18n]);
 
-  const applyTheme = (newTheme: 'light' | 'dark') => {
+  const applyTheme = (newTheme: ThemeType): void => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(newTheme);
     localStorage.setItem('theme', newTheme);
   };
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+  const toggleTheme = (): void => {
+    const newTheme: ThemeType = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     applyTheme(newTheme);
   };
 
-  const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
+  const changeLanguage = (langCode: string): void => {
+    void i18n.changeLanguage(langCode);
     localStorage.setItem('language', langCode);
   };
 
-  const handleScroll = useCallback(debounce(() => {
-    const sections = navigation.map(nav => document.getElementById(nav.sectionId));
-    const scrollPosition = window.scrollY + 100; // Offset for better detection
+  const handleScroll = useCallback(
+    debounce((): void => {
+      const sections = navigation.map(nav => document.getElementById(nav.sectionId));
+      const scrollPosition = window.scrollY + 100;
 
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const section = sections[i];
-      if (section) {
-        const sectionTop = section.offsetTop;
-        if (scrollPosition >= sectionTop) {
-          setActiveSection(navigation[i].sectionId);
-          break;
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            setActiveSection(navigation[i].sectionId);
+            break;
+          }
         }
       }
-    }
-  }, 100), []);
+    }, 100),
+    []
+  );
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return (): void => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
