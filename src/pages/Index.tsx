@@ -1,11 +1,12 @@
 
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
-import { Skills } from "@/components/Skills";
+import { Hero } from "@/components/home/Hero";
+import { Skills } from "@/components/home/Skills";
 import { Projects } from "@/components/Projects";
 import { Reviews } from "@/components/Reviews";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import React from 'react';
 
 const Index = () => {
   return (
