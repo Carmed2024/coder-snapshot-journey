@@ -1,6 +1,6 @@
+
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 const projects = [
   {
@@ -31,50 +31,50 @@ const projects = [
 
 export const Projects = () => {
   return (
-    <section className="py-20 px-4 bg-soft-gray dark:bg-background" id="projects">
+    <section className="py-20 px-4 bg-soft-gray dark:bg-background" id="projects" aria-labelledby="projects-heading">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16 animate-fade-up">
+        <header className="text-center mb-16 animate-fade-up">
           <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple dark:bg-dark-purple inline-block">
             Portfolio
           </span>
-          <h2 className="text-3xl font-bold mt-4 dark:text-white">Featured Projects</h2>
-        </div>
+          <h2 id="projects-heading" className="text-3xl font-bold mt-4 dark:text-white">Featured Projects</h2>
+        </header>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
-            <Card
+            <article
               key={project.title}
-              className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors animate-fade-up"
+              className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors animate-fade-up rounded-lg shadow-sm"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="p-6">
                 <h3 className="font-semibold text-lg mb-2 dark:text-white">{project.title}</h3>
                 <p className="text-muted-foreground dark:text-muted-dark mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <ul className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((tech) => (
-                    <span
+                    <li
                       key={tech}
                       className="px-3 py-1 rounded-full bg-soft-blue dark:bg-dark-blue text-sm dark:text-white"
                     >
                       {tech}
-                    </span>
+                    </li>
                   ))}
-                </div>
-                <div className="flex gap-4">
+                </ul>
+                <footer className="flex gap-4">
                   <Button variant="outline" size="sm" asChild>
-                    <a href={project.github} className="dark:text-white">
-                      <Github className="w-4 h-4 mr-2" />
-                      Code
+                    <a href={project.github} className="dark:text-white" rel="noopener noreferrer" target="_blank">
+                      <Github className="w-4 h-4 mr-2" aria-hidden="true" />
+                      <span>Code</span>
                     </a>
                   </Button>
                   <Button variant="outline" size="sm" asChild>
-                    <a href={project.demo} className="dark:text-white">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Demo
+                    <a href={project.demo} className="dark:text-white" rel="noopener noreferrer" target="_blank">
+                      <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
+                      <span>Demo</span>
                     </a>
                   </Button>
-                </div>
+                </footer>
               </div>
-            </Card>
+            </article>
           ))}
         </div>
       </div>

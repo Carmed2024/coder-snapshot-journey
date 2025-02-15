@@ -10,21 +10,21 @@ import { Footer } from "@/components/Footer";
 const Index = () => {
   return (
     <>
-      <div className="animated-background">
+      <div className="animated-background" aria-hidden="true">
         {[...Array(15)].map((_, i) => (
           <div key={i} className="firefly" />
         ))}
       </div>
       <div className="relative min-h-screen">
-        <main className="relative z-10">
-          <Navigation />
+        <Navigation />
+        <main id="main-content" className="relative z-10">
           <Hero />
           <Skills />
           <Projects />
           <Reviews />
           <Contact />
-          <Footer />
         </main>
+        <Footer />
       </div>
     </>
   );
