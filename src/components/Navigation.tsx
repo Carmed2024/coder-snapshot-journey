@@ -1,4 +1,3 @@
-
 import { Button } from './ui/button';
 import { Moon, Sun, Globe } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
@@ -8,10 +7,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import debounce from 'lodash/debounce';
-import { type NavigationItem, type LanguageOption, type ThemeType } from '@/types';
+import {
+  type NavigationItem,
+  type LanguageOption,
+  type ThemeType
+} from '@/types';
 
 const navigation: readonly NavigationItem[] = [
   { name: 'nav.about', href: '#about', sectionId: 'about' },
@@ -33,8 +36,11 @@ export const Navigation = (): JSX.Element => {
 
   useEffect((): void => {
     const savedTheme = localStorage.getItem('theme') as ThemeType | null;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme: ThemeType = savedTheme || (prefersDark ? 'dark' : 'light');
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+    const initialTheme: ThemeType =
+      savedTheme || (prefersDark ? 'dark' : 'light');
     setTheme(initialTheme);
     applyTheme(initialTheme);
 
@@ -64,7 +70,9 @@ export const Navigation = (): JSX.Element => {
 
   const handleScroll = useCallback(
     debounce((): void => {
-      const sections = navigation.map(nav => document.getElementById(nav.sectionId));
+      const sections = navigation.map((nav) =>
+        document.getElementById(nav.sectionId)
+      );
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -87,20 +95,27 @@ export const Navigation = (): JSX.Element => {
     return (): void => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ): void => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
+        block: 'start'
       });
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300" role="navigation" aria-label="Main navigation">
-      <div className="max-w-6xl mx-auto">
+    <nav
+      className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div className="max-w-6xl mx-auto px-3">
         <div className="flex items-center justify-between h-16">
           <span className="text-lg font-semibold text-foreground transition-colors">
             Christian RG
@@ -118,7 +133,9 @@ export const Navigation = (): JSX.Element => {
                         ? 'text-primary'
                         : 'text-foreground/80 hover:text-primary'
                     } after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-[-4px] after:transition-transform after:duration-300 after:scale-x-0 ${
-                      activeSection === item.sectionId ? 'after:scale-x-100' : ''
+                      activeSection === item.sectionId
+                        ? 'after:scale-x-100'
+                        : ''
                     }`}
                   >
                     {t(item.name)}
@@ -129,9 +146,9 @@ export const Navigation = (): JSX.Element => {
 
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="w-9 px-0"
                   aria-label="Change language"
                 >
@@ -149,7 +166,9 @@ export const Navigation = (): JSX.Element => {
                     onClick={() => changeLanguage(lang.code)}
                     className="cursor-pointer"
                   >
-                    <span className="mr-2" aria-hidden="true">{lang.flag}</span>
+                    <span className="mr-2" aria-hidden="true">
+                      {lang.flag}
+                    </span>
                     {lang.name}
                   </DropdownMenuItem>
                 ))}
@@ -168,9 +187,15 @@ export const Navigation = (): JSX.Element => {
                 } pointer-events-none flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out`}
               >
                 {theme === 'dark' ? (
-                  <Moon className="h-3.5 w-3.5 text-zinc-800" aria-hidden="true" />
+                  <Moon
+                    className="h-3.5 w-3.5 text-zinc-800"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <Sun className="h-3.5 w-3.5 text-orange-500" aria-hidden="true" />
+                  <Sun
+                    className="h-3.5 w-3.5 text-orange-500"
+                    aria-hidden="true"
+                  />
                 )}
               </span>
             </Toggle>

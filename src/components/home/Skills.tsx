@@ -27,7 +27,7 @@ export const Skills = React.memo(() => {
     <section className="py-20 px-4 bg-slate-100 dark:bg-background" id="skills" aria-labelledby="skills-heading">
       <div className="max-w-6xl mx-auto">
         <header className="text-center mb-16 animate-fade-up">
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-blue inline-block">
+          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-blue inline-block dark:bg-blue-400/30 dark:text-blue-300">
             Skills & Expertise
           </span>
           <h2 id="skills-heading" className="text-3xl font-bold mt-4">Technical Proficiencies</h2>

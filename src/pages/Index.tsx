@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <>
       <div className="animated-background" aria-hidden="true">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(5)].map((_, i) => (
           <div key={i} className="firefly" />
         ))}
       </div>

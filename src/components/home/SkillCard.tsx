@@ -9,7 +9,7 @@ interface SkillCardProps extends Skill {
 export const SkillCard = React.memo(({ category, items, animationDelay }: SkillCardProps) => {
   return (
     <article
-      className="p-6 backdrop-blur-sm bg-white/50 hover:bg-white/80 transition-colors animate-fade-up rounded-lg shadow-sm"
+      className="p-6 backdrop-blur-sm bg-white/50 dark:bg-gray-800 hover:bg-white/80 transition-colors animate-fade-up rounded-lg shadow-sm"
       style={{ animationDelay: `${animationDelay}ms` }}
     >
       <h3 className="font-semibold mb-4">{category}</h3>
@@ -17,7 +17,7 @@ export const SkillCard = React.memo(({ category, items, animationDelay }: SkillC
         {items.map((item) => (
           <li
             key={item}
-            className="px-3 py-1 rounded-full bg-soft-purple text-sm"
+            className="px-3 py-1 rounded-full bg-soft-purple text-sm dark:bg-purple-400/30 dark:text-purple-300"
           >
             {item}
           </li>

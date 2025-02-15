@@ -34,16 +34,16 @@ export const Projects = () => {
     <section className="py-20 px-4 bg-soft-gray dark:bg-background" id="projects" aria-labelledby="projects-heading">
       <div className="max-w-6xl mx-auto">
         <header className="text-center mb-16 animate-fade-up">
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple dark:bg-dark-purple inline-block">
+          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple dark:bg-purple-400/30 dark:text-purple-300 dark:bg-dark-purple inline-block">
             Portfolio
           </span>
-          <h2 id="projects-heading" className="text-3xl font-bold mt-4 dark:text-white">Featured Projects</h2>
+          <h2 id="projects-heading" className="text-3xl font-bold mt-4 dark:text-white ">Featured Projects</h2>
         </header>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <article
               key={project.title}
-              className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors animate-fade-up rounded-lg shadow-sm"
+              className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-gray-800 dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors animate-fade-up rounded-lg shadow-sm"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="p-6">
@@ -53,7 +53,7 @@ export const Projects = () => {
                   {project.tech.map((tech) => (
                     <li
                       key={tech}
-                      className="px-3 py-1 rounded-full bg-soft-blue dark:bg-dark-blue text-sm dark:text-white"
+                      className="px-3 py-1 rounded-full bg-soft-blue dark:bg-dark-blue text-sm dark:bg-blue-400/30 dark:text-blue-300"
                     >
                       {tech}
                     </li>
