@@ -29,17 +29,12 @@ export const Navigation = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
     setTheme(initialTheme);
     applyTheme(initialTheme);
 
-    // Check for saved language preference
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage) {
       i18n.changeLanguage(savedLanguage);
@@ -65,30 +60,36 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300">
+    <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300" role="navigation" aria-label="Main navigation">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between h-16">
-          <span className="text-lg font-semibold text-foreground transition-colors w-22">
+          <span className="text-lg font-semibold text-foreground transition-colors">
             Christian RG
           </span>
 
           <div className="flex items-center gap-4">
-            <div className="space-x-8 mr-6">
+            <ul className="space-x-8 mr-6 list-none flex">
               {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-                >
-                  {t(item.name)}
-                </a>
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
+                  >
+                    {t(item.name)}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
 
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="w-9 px-0">
-                  <Globe className="h-4 w-4" />
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="w-9 px-0"
+                  aria-label="Change language"
+                >
+                  <Globe className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -102,7 +103,7 @@ export const Navigation = () => {
                     onClick={() => changeLanguage(lang.code)}
                     className="cursor-pointer"
                   >
-                    <span className="mr-2">{lang.flag}</span>
+                    <span className="mr-2" aria-hidden="true">{lang.flag}</span>
                     {lang.name}
                   </DropdownMenuItem>
                 ))}
@@ -113,6 +114,7 @@ export const Navigation = () => {
               pressed={theme === 'dark'}
               onPressedChange={toggleTheme}
               className="relative inline-flex h-7 w-[52px] shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-muted transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-zinc-800 data-[state=unchecked]:bg-zinc-200"
+              aria-label="Toggle theme"
             >
               <span
                 className={`${
@@ -120,13 +122,13 @@ export const Navigation = () => {
                 } pointer-events-none flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out`}
               >
                 {theme === 'dark' ? (
-                  <Moon className="h-3.5 w-3.5 text-zinc-800" />
+                  <Moon className="h-3.5 w-3.5 text-zinc-800" aria-hidden="true" />
                 ) : (
-                  <Sun className="h-3.5 w-3.5 text-orange-500" />
+                  <Sun className="h-3.5 w-3.5 text-orange-500" aria-hidden="true" />
                 )}
               </span>
             </Toggle>
-            <Button>{t('nav.downloadCV')}</Button>
+            <Button type="button">{t('nav.downloadCV')}</Button>
           </div>
         </div>
       </div>
