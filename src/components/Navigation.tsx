@@ -1,7 +1,7 @@
 
 import { Button } from './ui/button';
 import { Moon, Sun, Globe } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Toggle } from './ui/toggle';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,13 +10,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import debounce from 'lodash/debounce';
 
 const navigation = [
-  { name: 'nav.about', href: '#about' },
-  { name: 'nav.skills', href: '#skills' },
-  { name: 'nav.projects', href: '#projects' },
-  { name: 'nav.reviews', href: '#reviews' },
-  { name: 'nav.contact', href: '#contact' }
+  { name: 'nav.about', href: '#about', sectionId: 'about' },
+  { name: 'nav.skills', href: '#skills', sectionId: 'skills' },
+  { name: 'nav.projects', href: '#projects', sectionId: 'projects' },
+  { name: 'nav.reviews', href: '#reviews', sectionId: 'reviews' },
+  { name: 'nav.contact', href: '#contact', sectionId: 'contact' }
 ];
 
 const languages = [
@@ -27,6 +28,7 @@ const languages = [
 export const Navigation = () => {
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
@@ -59,6 +61,39 @@ export const Navigation = () => {
     localStorage.setItem('language', langCode);
   };
 
+  const handleScroll = useCallback(debounce(() => {
+    const sections = navigation.map(nav => document.getElementById(nav.sectionId));
+    const scrollPosition = window.scrollY + 100; // Offset for better detection
+
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = sections[i];
+      if (section) {
+        const sectionTop = section.offsetTop;
+        if (scrollPosition >= sectionTop) {
+          setActiveSection(navigation[i].sectionId);
+          break;
+        }
+      }
+    }
+  }, 100), []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border transition-colors duration-300" role="navigation" aria-label="Main navigation">
       <div className="max-w-6xl mx-auto">
@@ -73,7 +108,14 @@ export const Navigation = () => {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
+                    onClick={(e) => scrollToSection(e, item.href)}
+                    className={`text-sm font-medium transition-colors relative ${
+                      activeSection === item.sectionId
+                        ? 'text-primary'
+                        : 'text-foreground/80 hover:text-primary'
+                    } after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-[-4px] after:transition-transform after:duration-300 after:scale-x-0 ${
+                      activeSection === item.sectionId ? 'after:scale-x-100' : ''
+                    }`}
                   >
                     {t(item.name)}
                   </a>
