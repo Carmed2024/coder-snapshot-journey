@@ -3,6 +3,7 @@ import { Moon, Sun, Globe } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
 import { Toggle } from './ui/toggle';
 import { useTranslation } from 'react-i18next';
+import { DownloadCVModal } from './modals/DownloadCVModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +34,7 @@ export const Navigation = (): JSX.Element => {
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<ThemeType>('light');
   const [activeSection, setActiveSection] = useState<string>('');
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
   useEffect((): void => {
     const savedTheme = localStorage.getItem('theme') as ThemeType | null;
@@ -199,10 +201,20 @@ export const Navigation = (): JSX.Element => {
                 )}
               </span>
             </Toggle>
-            <Button type="button">{t('nav.downloadCV')}</Button>
+            <Button 
+              type="button" 
+              onClick={() => setIsDownloadModalOpen(true)}
+            >
+              {t('nav.downloadCV')}
+            </Button>
           </div>
         </div>
       </div>
+
+      <DownloadCVModal 
+        isOpen={isDownloadModalOpen}
+        onClose={() => setIsDownloadModalOpen(false)}
+      />
     </nav>
   );
 };
