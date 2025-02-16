@@ -1,3 +1,4 @@
+
 import { type ReactNode } from 'react';
 import { z } from 'zod';
 
@@ -13,9 +14,12 @@ export type SocialLink = {
   label: string;
 };
 
+// Skill Types
+export type ProficiencyLevel = 'Basic' | 'Intermediate' | 'Advanced' | 'Expert';
+
 export type SkillItem = {
   name: string;
-  level: 'Basic' | 'Intermediate' | 'Advanced' | 'Expert';
+  level: ProficiencyLevel;
 };
 
 export type Skill = {
@@ -36,6 +40,21 @@ export type Review = {
   role: string;
   content: string;
   image: string;
+};
+
+// Navigation Types
+export type NavigationItem = {
+  name: string;
+  href: string;
+  sectionId: string;
+};
+
+export type ThemeType = 'light' | 'dark';
+
+export type LanguageOption = {
+  code: string;
+  name: string;
+  flag: string;
 };
 
 // Zod Schema Definitions
@@ -69,18 +88,3 @@ export const reviewSchema = z.object({
   content: z.string(),
   image: z.string().url(),
 });
-
-// Navigation Types
-export type NavigationItem = {
-  name: string;
-  href: string;
-  sectionId: string;
-};
-
-export type ThemeType = 'light' | 'dark';
-
-export type LanguageOption = {
-  code: string;
-  name: string;
-  flag: string;
-};
