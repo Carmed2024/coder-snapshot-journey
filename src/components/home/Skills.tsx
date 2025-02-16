@@ -56,13 +56,14 @@ export const Skills = React.memo(() => {
           </span>
           <h2 id="skills-heading" className="text-3xl font-bold mt-4">Technical Proficiencies</h2>
         </header>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 [column-fill:_balance] box-border mx-auto">
           {skills.map((skill, index) => (
-            <SkillCard
-              key={skill.category}
-              {...skill}
-              animationDelay={index * 100}
-            />
+            <div key={skill.category} className="break-inside-avoid mb-6">
+              <SkillCard
+                {...skill}
+                animationDelay={index * 100}
+              />
+            </div>
           ))}
         </div>
       </div>

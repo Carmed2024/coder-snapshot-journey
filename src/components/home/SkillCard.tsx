@@ -12,6 +12,7 @@ import {
   TestTube,
   type LucideIcon
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface SkillCardProps extends Skill {
   animationDelay: number;
@@ -74,17 +75,22 @@ const getExperienceYears = (level: ProficiencyLevel): string => {
 
 export const SkillCard = React.memo(({ category, items, animationDelay }: SkillCardProps) => {
   return (
-    <article
-      className="p-6 backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all animate-fade-up rounded-lg shadow-sm"
-      style={{ animationDelay: `${animationDelay}ms` }}
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: animationDelay * 0.001 }}
+      className="p-6 backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all rounded-lg shadow-sm"
     >
       <h3 className="font-semibold mb-4 text-lg">{category}</h3>
       <ul className="space-y-4">
         {items.map((item) => {
           const Icon = getTechIcon(item.name);
           return (
-            <li 
-              key={item.name} 
+            <motion.li 
+              key={item.name}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, delay: animationDelay * 0.001 + 0.1 }}
               className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
             >
               <Icon className="w-5 h-5 mt-1 text-gray-600 dark:text-gray-300" />
@@ -99,11 +105,11 @@ export const SkillCard = React.memo(({ category, items, animationDelay }: SkillC
                   {getExperienceYears(item.level)}
                 </span>
               </div>
-            </li>
+            </motion.li>
           );
         })}
       </ul>
-    </article>
+    </motion.article>
   );
 });
 
