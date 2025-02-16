@@ -2,6 +2,7 @@
 import { type Skill } from '@/types';
 import { SkillCard } from './SkillCard';
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const skills: Skill[] = [
   {
@@ -46,26 +47,40 @@ const skills: Skill[] = [
   },
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
 export const Skills = React.memo(() => {
   return (
     <section className="py-20 px-4 bg-slate-100 dark:bg-background" id="skills" aria-labelledby="skills-heading">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <header className="text-center mb-16 animate-fade-up">
           <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-blue inline-block dark:bg-blue-400/30 dark:text-blue-300">
             Skills & Expertise
           </span>
           <h2 id="skills-heading" className="text-3xl font-bold mt-4">Technical Proficiencies</h2>
         </header>
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 [column-fill:_balance] box-border mx-auto">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-auto gap-6"
+        >
           {skills.map((skill, index) => (
-            <div key={skill.category} className="break-inside-avoid mb-6">
-              <SkillCard
-                {...skill}
-                animationDelay={index * 100}
-              />
-            </div>
+            <SkillCard
+              key={skill.category}
+              {...skill}
+              animationDelay={index * 100}
+            />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
