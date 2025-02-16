@@ -6,19 +6,43 @@ import React from 'react';
 const skills: Skill[] = [
   {
     category: "Frontend",
-    items: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Redux"],
+    items: [
+      { name: "React", level: "Expert" },
+      { name: "TypeScript", level: "Advanced" },
+      { name: "Next.js", level: "Advanced" },
+      { name: "Tailwind CSS", level: "Expert" },
+      { name: "Redux", level: "Intermediate" }
+    ],
   },
   {
     category: "Backend",
-    items: ["Node.js", "Python", "Django", "PostgreSQL", "MongoDB"],
+    items: [
+      { name: "Node.js", level: "Advanced" },
+      { name: "Python", level: "Intermediate" },
+      { name: "Django", level: "Intermediate" },
+      { name: "PostgreSQL", level: "Advanced" },
+      { name: "MongoDB", level: "Basic" }
+    ],
   },
   {
     category: "DevOps",
-    items: ["Docker", "AWS", "CI/CD", "Kubernetes", "Linux"],
+    items: [
+      { name: "Docker", level: "Advanced" },
+      { name: "AWS", level: "Intermediate" },
+      { name: "CI/CD", level: "Advanced" },
+      { name: "Kubernetes", level: "Basic" },
+      { name: "Linux", level: "Advanced" }
+    ],
   },
   {
     category: "Tools",
-    items: ["Git", "VS Code", "Figma", "Postman", "Jest"],
+    items: [
+      { name: "Git", level: "Expert" },
+      { name: "VS Code", level: "Expert" },
+      { name: "Figma", level: "Intermediate" },
+      { name: "Postman", level: "Advanced" },
+      { name: "Jest", level: "Advanced" }
+    ],
   },
 ];
 

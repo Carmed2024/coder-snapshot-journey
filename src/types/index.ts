@@ -1,4 +1,3 @@
-
 import { type ReactNode } from 'react';
 import { z } from 'zod';
 
@@ -14,9 +13,14 @@ export type SocialLink = {
   label: string;
 };
 
+export type SkillItem = {
+  name: string;
+  level: 'Basic' | 'Intermediate' | 'Advanced' | 'Expert';
+};
+
 export type Skill = {
   category: string;
-  items: string[];
+  items: SkillItem[];
 };
 
 export type Project = {
@@ -41,9 +45,14 @@ export const socialLinkSchema = z.object({
   label: z.string(),
 });
 
+export const skillItemSchema = z.object({
+  name: z.string(),
+  level: z.enum(['Basic', 'Intermediate', 'Advanced', 'Expert']),
+});
+
 export const skillSchema = z.object({
   category: z.string(),
-  items: z.array(z.string()),
+  items: z.array(skillItemSchema),
 });
 
 export const projectSchema = z.object({
