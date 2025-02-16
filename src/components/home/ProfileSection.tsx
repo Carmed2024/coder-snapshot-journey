@@ -2,7 +2,7 @@
 import { type SocialLink } from '@/types';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '../ui/button';
-import Profile from '@/assets/profile-pic 67.png';
+import Profile from '@/assets/profile-pic 66.png';
 import React from 'react';
 
 interface ProfileSectionProps {
@@ -19,7 +19,7 @@ export const ProfileSection = React.memo(({ socialLinks }: ProfileSectionProps) 
   return (
     <section className="space-y-4 animate-fade-up mt-32 md:mt-32 lg:mt-0" aria-label="Introduction">
       <figure className="relative">
-        <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-primary/10 shadow-xl mx-auto lg:mr-auto lg:ml-0 ">
+        <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-primary/10 shadow-xl mx-auto lg:mr-auto lg:ml-0 ">
           <img
             src={Profile}
             alt="Christian RG - Software Engineer"

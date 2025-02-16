@@ -139,7 +139,7 @@
   background: theme('colors.firefly.DEFAULT');
   opacity: 0.2;
   box-shadow: 0 0 0vw 0vw theme('colors.primary.DEFAULT');
-  animation: drift 12s ease alternate infinite, flash 5s ease infinite;
+  animation: drift 12s ease alternate infinite, flash 10s ease infinite;
 }
 
 
