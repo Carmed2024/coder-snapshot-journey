@@ -1,35 +1,74 @@
 
 import { type Skill, type ProficiencyLevel } from '@/types';
 import React from 'react';
-import { Progress } from "@/components/ui/progress";
+import { 
+  Code2, 
+  Server, 
+  Database, 
+  Container, 
+  GitBranch, 
+  Globe, 
+  Workflow,
+  TestTube,
+  type LucideIcon
+} from 'lucide-react';
 
 interface SkillCardProps extends Skill {
   animationDelay: number;
 }
 
+const getTechIcon = (name: string): LucideIcon => {
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes('react') || lowerName.includes('typescript') || lowerName.includes('javascript')) {
+    return Code2;
+  }
+  if (lowerName.includes('node') || lowerName.includes('django')) {
+    return Server;
+  }
+  if (lowerName.includes('sql') || lowerName.includes('mongo')) {
+    return Database;
+  }
+  if (lowerName.includes('docker') || lowerName.includes('kubernetes')) {
+    return Container;
+  }
+  if (lowerName.includes('git')) {
+    return GitBranch;
+  }
+  if (lowerName.includes('aws') || lowerName.includes('cloud')) {
+    return Globe;
+  }
+  if (lowerName.includes('ci') || lowerName.includes('cd')) {
+    return Workflow;
+  }
+  if (lowerName.includes('jest') || lowerName.includes('test')) {
+    return TestTube;
+  }
+  return Code2;
+};
+
 const getProficiencyColor = (level: ProficiencyLevel): string => {
   switch (level) {
     case 'Expert':
-      return 'bg-green-500/20 text-green-700 dark:bg-green-500/30 dark:text-green-300';
+      return 'text-green-700 dark:text-green-300';
     case 'Advanced':
-      return 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/30 dark:text-blue-300';
+      return 'text-blue-700 dark:text-blue-300';
     case 'Intermediate':
-      return 'bg-yellow-500/20 text-yellow-700 dark:bg-yellow-500/30 dark:text-yellow-300';
+      return 'text-yellow-700 dark:text-yellow-300';
     default:
-      return 'bg-purple-500/20 text-purple-700 dark:bg-purple-500/30 dark:text-purple-300';
+      return 'text-purple-700 dark:text-purple-300';
   }
 };
 
-const getProficiencyValue = (level: ProficiencyLevel): number => {
+const getExperienceYears = (level: ProficiencyLevel): string => {
   switch (level) {
     case 'Expert':
-      return 100;
+      return '+5 yrs exp';
     case 'Advanced':
-      return 80;
+      return '+3 yrs exp';
     case 'Intermediate':
-      return 60;
+      return '+2 yrs exp';
     default:
-      return 40;
+      return '+1 yr exp';
   }
 };
 
@@ -40,21 +79,30 @@ export const SkillCard = React.memo(({ category, items, animationDelay }: SkillC
       style={{ animationDelay: `${animationDelay}ms` }}
     >
       <h3 className="font-semibold mb-4 text-lg">{category}</h3>
-      <div className="space-y-4">
-        {items.map((item) => (
-          <div key={item.name} className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getProficiencyColor(item.level)}`}>
-                {item.name}
-              </span>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {item.level}
-              </span>
-            </div>
-            <Progress value={getProficiencyValue(item.level)} className="h-1.5" />
-          </div>
-        ))}
-      </div>
+      <ul className="space-y-4">
+        {items.map((item) => {
+          const Icon = getTechIcon(item.name);
+          return (
+            <li 
+              key={item.name} 
+              className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+            >
+              <Icon className="w-5 h-5 mt-1 text-gray-600 dark:text-gray-300" />
+              <div className="flex-1">
+                <div className="flex justify-between items-start">
+                  <span className="font-medium">{item.name}</span>
+                  <span className={`text-sm font-medium ${getProficiencyColor(item.level)}`}>
+                    {item.level}
+                  </span>
+                </div>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {getExperienceYears(item.level)}
+                </span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </article>
   );
 });

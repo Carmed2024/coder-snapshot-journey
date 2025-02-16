@@ -7,7 +7,7 @@ const skills: Skill[] = [
   {
     category: "Frontend",
     items: [
-      { name: "React", level: "Expert" },
+      { name: "React.js", level: "Expert" },
       { name: "TypeScript", level: "Advanced" },
       { name: "Next.js", level: "Advanced" },
       { name: "Tailwind CSS", level: "Expert" },
