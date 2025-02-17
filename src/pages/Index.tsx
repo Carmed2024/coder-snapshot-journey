@@ -20,7 +20,7 @@ const Index = () => {
         <Navigation />
         <main id="main-content" className="relative z-10">
           <Hero />
-          <Skills />
+
           <Projects />
           <Reviews />
           <Contact />

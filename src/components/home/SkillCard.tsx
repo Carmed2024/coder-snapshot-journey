@@ -1,12 +1,12 @@
 import { type Skill, type ProficiencyLevel } from '@/types';
 import React from 'react';
-import { 
-  Code2, 
-  Server, 
-  Database, 
-  Container, 
-  GitBranch, 
-  Globe, 
+import {
+  Code2,
+  Server,
+  Database,
+  Container,
+  GitBranch,
+  Globe,
   Workflow,
   TestTube,
   type LucideIcon
@@ -75,8 +75,8 @@ const getExperienceYears = (level: ProficiencyLevel): string => {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     y: 0,
     transition: {
       type: "spring",
@@ -92,19 +92,19 @@ export const SkillCard = React.memo(({ category, items, animationDelay }: SkillC
       variants={itemVariants}
       className="h-fit transform hover:scale-[1.02] transition-transform duration-200"
     >
-      <Card className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-800/80">
+      <Card className="overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-black hover:bg-white/80">
         <div className="p-6">
           <h3 className="font-semibold mb-4 text-lg">{category}</h3>
           <ul className="space-y-4">
             {items.map((item, index) => {
               const Icon = getTechIcon(item.name);
               return (
-                <motion.li 
+                <motion.li
                   key={item.name}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ 
-                    duration: 0.2, 
+                  transition={{
+                    duration: 0.2,
                     delay: (animationDelay * 0.001) + (index * 0.1),
                     ease: "easeOut"
                   }}

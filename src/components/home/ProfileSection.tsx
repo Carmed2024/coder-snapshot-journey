@@ -17,13 +17,16 @@ const iconMap = {
 
 export const ProfileSection = React.memo(({ socialLinks }: ProfileSectionProps) => {
   return (
-    <section className="space-y-4 animate-fade-up mt-32 md:mt-32 lg:mt-0" aria-label="Introduction">
-      <figure className="relative">
-        <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-primary/10 shadow-xl mx-auto lg:mr-auto lg:ml-0 ">
+    <section className="space-y-4 animate-fade-up mt-32 md:mt-32 lg:mt-3 " aria-label="Introduction">
+      <figure className="relative ">
+
+        <div className="  w-36 h-36 rounded-full  ring-4 ring-primary/10 mx-auto lg:mr-auto lg:ml-0 ">
+
+
           <img
             src={Profile}
             alt="Christian RG - Software Engineer"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover drop-shadow-md "
             loading="lazy"
           />
         </div>
@@ -31,15 +34,18 @@ export const ProfileSection = React.memo(({ socialLinks }: ProfileSectionProps) 
 
       <div className="space-y-2 text-center lg:text-left">
         <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-purple inline-block dark:bg-purple-400/30 dark:text-purple-300">
-          Software Engineer
+          Full Stack Developer
         </span>
         <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-soft-blue inline-block ml-2 dark:bg-blue-400/30 dark:text-blue-300">
           Tech Lead
         </span>
+        <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-indigo-100 inline-block ml-2 dark:bg-indigo-400/30 dark:text-indigo-300">
+          AI Practitioner
+        </span>
       </div>
 
       <h2 className="text-2xl md:text-3xl font-semibold text-primary text-center lg:text-left">
-        Hello, I'm Christian 👋
+        Hello, I'm <span className='underline-05'>Christian</span>  👋
       </h2>
 
       <div className="prose prose-lg text-center lg:text-left pt-4">

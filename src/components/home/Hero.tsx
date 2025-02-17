@@ -26,8 +26,8 @@ export const Hero = React.memo(() => {
       <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 text-left">
         <div className="text-center lg:text-left flex items-center animate-fade-down">
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-6xl lg:text-7xl font-bold tracking-tight text-center lg:text-right text-foreground dark:text-white">
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-6xl lg:text-8xl font-bold tracking-tight text-center lg:text-right text-foreground dark:text-white">
+              <span className="gradient-drop-shadow bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
                 Software Engineer
               </span>
               & Creative Developer

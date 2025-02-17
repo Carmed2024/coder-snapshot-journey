@@ -52,10 +52,10 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 252 91% 2%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 23% 3%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
@@ -72,13 +72,13 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 222.2 13% 19%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
+    --border: 222.2 13% 19%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
 
@@ -107,6 +107,45 @@
   }
 }
 
+.underline--magical {
+  background-image: linear-gradient(120deg, #6348ff 0%, #e47aff 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.3em;
+  background-position: 0 115%;
+}
+
+.underline-05 {
+  -webkit-text-decoration: underline wavy #4e1cc4;
+  text-decoration: underline wavy #6a30f0;
+}
+
+
+.gradient-drop-shadow {
+  filter: drop-shadow(0px 1px 30px #0055ff25)
+          drop-shadow(1px 0px 35px #8800ff2a);
+}
+.gradient-shadow {
+  position: relative;
+  z-index: 1;
+}
+
+.gradient-shadow::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(
+    45deg,
+    #0080ff,
+    #8800ff
+  );
+  border-radius: inherit;
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.7;
+}
 
 
 /* Firefly effect */
@@ -145,11 +184,11 @@
 
 
 /* Individual firefly animations */
-.firefly:nth-child(1) { animation: move1 20s ease alternate infinite; }
-.firefly:nth-child(2) { animation: move2 20s ease alternate infinite; }
-.firefly:nth-child(3) { animation: move3 20s ease alternate infinite; }
-.firefly:nth-child(4) { animation: move4 20s ease alternate infinite; }
-.firefly:nth-child(5) { animation: move5 20s ease alternate infinite; }
+.firefly:nth-child(1) { animation: move1 25s ease alternate infinite; }
+.firefly:nth-child(2) { animation: move2 25s ease alternate infinite; }
+.firefly:nth-child(3) { animation: move3 25s ease alternate infinite; }
+.firefly:nth-child(4) { animation: move4 25s ease alternate infinite; }
+.firefly:nth-child(5) { animation: move5 25s ease alternate infinite; }
 
 @keyframes drift {
   0% { transform: rotate(0deg); }
