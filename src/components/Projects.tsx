@@ -1,6 +1,7 @@
 
-import { ExternalLink, Github, LayoutGrid, List } from 'lucide-react';
+import { ExternalLink, Github, LayoutGrid, List, Filter, Check } from 'lucide-react';
 import { Button } from './ui/button';
+import { Checkbox } from './ui/checkbox';
 import React, { useState, useMemo } from 'react';
 import { type Project, type ProjectCategory, type ProjectIndustry, type ViewMode, type SortOption } from '@/types';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,8 +9,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 const projects: Project[] = [
@@ -111,6 +115,8 @@ export const Projects = () => {
     );
   };
 
+  const activeFiltersCount = selectedTechnologies.length + selectedIndustries.length;
+
   return (
     <section
       className="py-20 px-4 bg-soft-gray dark:bg-background"
@@ -149,51 +155,66 @@ export const Projects = () => {
 
           {/* Right side: Controls */}
           <div className="flex-1 flex flex-col sm:flex-row gap-4 justify-between">
-            {/* Filters */}
+            {/* Filters Dropdown */}
             <div className="flex flex-wrap gap-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Technologies</Button>
+                  <Button variant="outline" className="min-w-[120px]" aria-label="Open Filters">
+                    <Filter className="w-4 h-4 mr-2" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <span className="ml-2 px-2 py-0.5 bg-primary text-primary-foreground rounded-full text-xs">
+                        {activeFiltersCount}
+                      </span>
+                    )}
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {technologies.map((tech) => (
-                    <DropdownMenuItem
-                      key={tech}
-                      onClick={() => toggleTechnology(tech)}
-                      className={cn(
-                        'cursor-pointer',
-                        selectedTechnologies.includes(tech) && 'bg-accent'
-                      )}
-                    >
-                      {tech}
-                    </DropdownMenuItem>
-                  ))}
+                <DropdownMenuContent className="w-80" align="start">
+                  <div className="p-2">
+                    <DropdownMenuLabel>Technologies</DropdownMenuLabel>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {technologies.map((tech) => (
+                        <div key={tech} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`tech-${tech}`}
+                            checked={selectedTechnologies.includes(tech)}
+                            onCheckedChange={() => toggleTechnology(tech)}
+                          />
+                          <label
+                            htmlFor={`tech-${tech}`}
+                            className="text-sm cursor-pointer"
+                          >
+                            {tech}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Separator className="my-4" />
+
+                    <DropdownMenuLabel>Industries</DropdownMenuLabel>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {industries.map((industry) => (
+                        <div key={industry} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`industry-${industry}`}
+                            checked={selectedIndustries.includes(industry)}
+                            onCheckedChange={() => toggleIndustry(industry)}
+                          />
+                          <label
+                            htmlFor={`industry-${industry}`}
+                            className="text-sm cursor-pointer"
+                          >
+                            {industry}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Industries</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {industries.map((industry) => (
-                    <DropdownMenuItem
-                      key={industry}
-                      onClick={() => toggleIndustry(industry)}
-                      className={cn(
-                        'cursor-pointer',
-                        selectedIndustries.includes(industry) && 'bg-accent'
-                      )}
-                    >
-                      {industry}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            {/* Sort and View Controls */}
-            <div className="flex gap-4">
+              {/* Sort Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">Sort By</Button>
@@ -210,6 +231,7 @@ export const Projects = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              {/* View Toggle */}
               <div className="flex gap-2">
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'outline'}
