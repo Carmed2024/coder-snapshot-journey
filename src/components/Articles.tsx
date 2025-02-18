@@ -1,6 +1,7 @@
 
 import { type Article, type ArticleCategory } from "@/types";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 const articles: Article[] = [
   {
@@ -52,42 +53,51 @@ export const Articles = () => {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {articles.map((article, index) => (
             <motion.article
               key={article.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="group"
+              className="group bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
             >
-              <a 
-                href={article.url}
-                className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center hover:opacity-90 transition-opacity"
-              >
-                <div className="order-2 md:order-1 space-y-4">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>{article.category}</span>
+              <div className="flex flex-col sm:flex-row h-full">
+                <div className="sm:w-[300px] h-[200px] sm:h-full relative">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                
+                <div className="flex-1 p-6 flex flex-col">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                      {article.category}
+                    </span>
                     <span>{article.date}</span>
                     <span>{article.readTime}</span>
                   </div>
-                  <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                  
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                     {article.title}
                   </h3>
-                  <p className="text-muted-foreground">
+                  
+                  <p className="text-muted-foreground mb-4 flex-grow">
                     {article.description}
                   </p>
+                  
+                  <a 
+                    href={article.url}
+                    className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mt-auto"
+                  >
+                    Read More 
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
                 </div>
-                <div className="order-1 md:order-2">
-                  <div className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-                    <img
-                      src={article.image}
-                      alt=""
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                </div>
-              </a>
+              </div>
             </motion.article>
           ))}
         </div>
