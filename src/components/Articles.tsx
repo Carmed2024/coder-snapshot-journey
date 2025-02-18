@@ -6,7 +6,7 @@ const articles: Article[] = [
   {
     title: "Introducing the Intelligence Age",
     description: "A comprehensive look at how AI is shaping our future",
-    category: "Global Affairs",
+    category: "AI",
     date: "2024-02-09",
     readTime: "5 min read",
     image: "/lovable-uploads/463ea0f7-ee83-4eee-900e-0826287dd109.png",
@@ -15,7 +15,7 @@ const articles: Article[] = [
   {
     title: "OpenAI and the CSU system bring AI to 500,000 students & faculty",
     description: "Revolutionizing education through AI integration",
-    category: "Company",
+    category: "AI",
     date: "2024-02-04",
     readTime: "3 min read",
     image: "/placeholder.svg",
@@ -24,7 +24,7 @@ const articles: Article[] = [
   {
     title: "OpenAI o3-mini System Card",
     description: "Technical insights into OpenAI's latest system",
-    category: "Publication",
+    category: "Tools",
     date: "2024-01-31",
     readTime: "2 min read",
     image: "/placeholder.svg",
@@ -33,7 +33,7 @@ const articles: Article[] = [
   {
     title: "Introducing ChatGPT Gov",
     description: "AI solutions for government services",
-    category: "Global Affairs",
+    category: "AI",
     date: "2024-01-28",
     readTime: "6 min read",
     image: "/placeholder.svg",
