@@ -16,22 +16,28 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = (): JSX.Element => {
+const AppContent = (): JSX.Element => {
   return (
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/" element={
-            <TooltipProvider>
-              <Index />
-              <Toaster />
-              <Sonner />
-            </TooltipProvider>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </QueryClientProvider>
+      <Routes>
+        <Route path="/" element={
+          <TooltipProvider>
+            <Index />
+            <Toaster />
+            <Sonner />
+          </TooltipProvider>
+        } />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
+  );
+};
+
+const App = (): JSX.Element => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppContent />
+    </QueryClientProvider>
   );
 };
 
