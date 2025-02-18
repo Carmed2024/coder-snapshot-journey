@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// Create QueryClient instance outside of component
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -19,18 +18,20 @@ const queryClient = new QueryClient({
 
 const App = (): JSX.Element => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <TooltipProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-          <Sonner />
-        </TooltipProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={
+            <TooltipProvider>
+              <Index />
+              <Toaster />
+              <Sonner />
+            </TooltipProvider>
+          } />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 };
 
