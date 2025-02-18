@@ -1,4 +1,3 @@
-
 import { type ReactNode } from 'react';
 import { z } from 'zod';
 
@@ -27,12 +26,21 @@ export type Skill = {
   items: SkillItem[];
 };
 
+export type ProjectCategory = 'All' | 'Web Development' | 'AI' | 'UX Design' | 'Video Games';
+export type ProjectIndustry = 'Commerce' | 'Education' | 'Healthcare' | 'Technology' | 'Other';
+export type ViewMode = 'grid' | 'list';
+export type SortOption = 'newest' | 'oldest' | 'az' | 'za';
+
 export type Project = {
   title: string;
   description: string;
   tech: string[];
   github: string;
   demo: string;
+  image: string;
+  category: ProjectCategory;
+  industry: ProjectIndustry;
+  date: string;
 };
 
 export type Review = {
@@ -80,6 +88,10 @@ export const projectSchema = z.object({
   tech: z.array(z.string()),
   github: z.string().url(),
   demo: z.string().url(),
+  image: z.string(),
+  category: z.enum(['All', 'Web Development', 'AI', 'UX Design', 'Video Games']),
+  industry: z.enum(['Commerce', 'Education', 'Healthcare', 'Technology', 'Other']),
+  date: z.string(),
 });
 
 export const reviewSchema = z.object({
