@@ -100,3 +100,25 @@ export const reviewSchema = z.object({
   content: z.string(),
   image: z.string().url(),
 });
+
+export type ArticleCategory = 'AI' | 'Web Development' | 'Tools' | 'Tutorials';
+
+export type Article = {
+  title: string;
+  description: string;
+  category: ArticleCategory;
+  date: string;
+  readTime: string;
+  image: string;
+  url: string;
+};
+
+export const articleSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  category: z.enum(['AI', 'Web Development', 'Tools', 'Tutorials']),
+  date: z.string(),
+  readTime: z.string(),
+  image: z.string(),
+  url: z.string().url(),
+});

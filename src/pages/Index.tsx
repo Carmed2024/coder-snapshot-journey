@@ -4,6 +4,7 @@ import { Hero } from "@/components/home/Hero";
 import { Skills } from "@/components/home/Skills";
 import { Projects } from "@/components/Projects";
 import { Reviews } from "@/components/Reviews";
+import { Articles } from "@/components/Articles";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import React from 'react';
@@ -20,8 +21,9 @@ const Index = () => {
         <Navigation />
         <main id="main-content" className="relative z-10">
           <Hero />
-
+          <Skills />
           <Projects />
+          <Articles />
           <Reviews />
           <Contact />
         </main>
