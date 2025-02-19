@@ -73,13 +73,13 @@ export const Projects = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
 
   const filteredAndSortedProjects = useMemo(() => {
-    let filtered = projects.filter((project) => {
+    const filtered = projects.filter((project) => {
       const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory;
-      const matchesTech = selectedTechnologies.length === 0 || 
+      const matchesTech = selectedTechnologies.length === 0 ||
         project.tech.some(tech => selectedTechnologies.includes(tech));
-      const matchesIndustry = selectedIndustries.length === 0 || 
+      const matchesIndustry = selectedIndustries.length === 0 ||
         selectedIndustries.includes(project.industry);
-      
+
       return matchesCategory && matchesTech && matchesIndustry;
     });
 
@@ -136,10 +136,10 @@ export const Projects = () => {
           </h2>
         </header>
 
-        <div className="mb-8 flex flex-col md:flex-row gap-6 items-start">
+        <div className="mb-8 flex md:flex-row justify-between w-full gap-6 items-start">
           {/* Left side: Category Tabs */}
           <Tabs defaultValue="All" className="w-full md:w-auto" orientation="vertical">
-            <TabsList className="flex flex-row md:flex-col h-auto bg-transparent space-x-2 md:space-x-0 md:space-y-2">
+            <TabsList className="flex h-auto bg-transparent space-x-2 md:space-x-0 md:space-y-2">
               {categories.map((category) => (
                 <TabsTrigger
                   key={category}
@@ -154,7 +154,7 @@ export const Projects = () => {
           </Tabs>
 
           {/* Right side: Controls */}
-          <div className="flex-1 flex flex-col sm:flex-row gap-4 justify-between">
+          <div className="flex gap-4 ">
             {/* Filters Dropdown */}
             <div className="flex flex-wrap gap-4">
               <DropdownMenu>
@@ -260,7 +260,7 @@ export const Projects = () => {
             <article
               key={project.title}
               className={cn(
-                'overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-black dark:bg-dark-card/50 hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors rounded-lg shadow-sm',
+                'overflow-hidden backdrop-blur-sm bg-white/50 dark:bg-black  hover:bg-white/80 dark:hover:bg-dark-card/80 transition-colors rounded-lg shadow-sm',
                 viewMode === 'list' && 'flex flex-col md:flex-row gap-6'
               )}
               style={{ animationDelay: `${index * 100}ms` }}
@@ -269,13 +269,13 @@ export const Projects = () => {
                 'p-6',
                 viewMode === 'list' && 'flex-1'
               )}>
-                <img 
-                  src={project.image} 
+                <img
+                  src={project.image}
                   className={cn(
                     'w-full mb-4 rounded-sm',
                     viewMode === 'list' && 'md:w-64 md:mb-0'
-                  )} 
-                  alt="" 
+                  )}
+                  alt=""
                 />
                 <div className={viewMode === 'list' ? 'flex-1' : ''}>
                   <h3 className="font-semibold text-lg mb-2 dark:text-white">
