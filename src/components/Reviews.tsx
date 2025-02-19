@@ -1,7 +1,7 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
+import useEmblaCarousel, { type EmblaCarouselType, type EmblaPluginType } from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
 const reviews = [
@@ -47,42 +47,43 @@ const pastelColors = [
   "bg-[#D3E4FD]", // Soft Blue
 ];
 
-const autoScrollPlugin = (delay = 4000) => {
-  let rafId = 0;
-  let timer = 0;
-
-  const play = (emblaApi) => {
-    stop();
-    timer = window.setTimeout(() => {
-      if (!emblaApi.canScrollNext()) {
-        emblaApi.scrollTo(0);
+const autoScrollPlugin = (delay = 4000): EmblaPluginType => {
+  let intervalId: ReturnType<typeof setInterval>;
+  
+  const autoplay = (embla: EmblaCarouselType) => {
+    if (!embla) return;
+    
+    intervalId = setInterval(() => {
+      if (!embla.canScrollNext()) {
+        embla.scrollTo(0);
       } else {
-        emblaApi.scrollNext();
+        embla.scrollNext();
       }
-      rafId = window.requestAnimationFrame(() => play(emblaApi));
     }, delay);
   };
 
-  const stop = () => {
-    window.clearTimeout(timer);
-    window.cancelAnimationFrame(rafId);
+  const stopAutoplay = () => {
+    if (intervalId) clearInterval(intervalId);
   };
 
-  const setup = (emblaApi) => {
-    play(emblaApi);
-    emblaApi.on('pointerDown', stop);
-    emblaApi.on('init', () => play(emblaApi));
-  };
-
-  const destroy = () => {
-    stop();
-  };
-
-  return (emblaRoot) => {
-    return {
-      setup,
-      destroy,
-    };
+  return {
+    name: 'autoScroll',
+    options: { delay },
+    init: (embla) => {
+      autoplay(embla);
+    },
+    destroy: () => {
+      stopAutoplay();
+    },
+    pointerDown: () => {
+      stopAutoplay();
+    },
+    pointerUp: (embla) => {
+      autoplay(embla);
+    },
+    settle: (embla) => {
+      autoplay(embla);
+    }
   };
 };
 
