@@ -1,3 +1,4 @@
+
 import { type Article, type ArticleCategory } from "@/types";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -11,7 +12,8 @@ const articles: Article[] = [
     date: "2024-02-09",
     readTime: "5 min read",
     image: "/lovable-uploads/463ea0f7-ee83-4eee-900e-0826287dd109.png",
-    url: "https://example.com/intelligence-age"
+    url: "/articles/introducing-the-intelligence-age",
+    slug: "introducing-the-intelligence-age"
   },
   {
     title: "OpenAI and the CSU system bring AI to 500,000 students & faculty",
@@ -20,7 +22,8 @@ const articles: Article[] = [
     date: "2024-02-04",
     readTime: "3 min read",
     image: "/placeholder.svg",
-    url: "https://example.com/openai-csu"
+    url: "/articles/openai-csu-ai-education-partnership",
+    slug: "openai-csu-ai-education-partnership"
   },
   {
     title: "OpenAI o3-mini System Card",
@@ -29,7 +32,8 @@ const articles: Article[] = [
     date: "2024-01-31",
     readTime: "2 min read",
     image: "/placeholder.svg",
-    url: "https://example.com/o3-mini"
+    url: "/articles/openai-o3-mini-system-card",
+    slug: "openai-o3-mini-system-card"
   },
   {
     title: "Introducing ChatGPT Gov",
@@ -38,7 +42,8 @@ const articles: Article[] = [
     date: "2024-01-28",
     readTime: "6 min read",
     image: "/placeholder.svg",
-    url: "https://example.com/chatgpt-gov"
+    url: "/articles/introducing-chatgpt-gov",
+    slug: "introducing-chatgpt-gov"
   }
 ];
 
@@ -96,13 +101,13 @@ export const Articles = () => {
                     {article.description}
                   </p>
                   
-                  <a 
-                    href={article.url}
+                  <Link 
+                    to={`/articles/${article.slug}`}
                     className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mt-auto"
                   >
                     Read More 
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.article>

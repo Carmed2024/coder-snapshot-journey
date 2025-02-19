@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TechInsights from "./pages/TechInsights";
+import ArticleDetail from "./pages/ArticleDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,6 +32,13 @@ const AppContent = (): JSX.Element => {
         <Route path="/tech-insights" element={
           <TooltipProvider>
             <TechInsights />
+            <Toaster />
+            <Sonner />
+          </TooltipProvider>
+        } />
+        <Route path="/articles/:slug" element={
+          <TooltipProvider>
+            <ArticleDetail />
             <Toaster />
             <Sonner />
           </TooltipProvider>

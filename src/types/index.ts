@@ -111,6 +111,7 @@ export type Article = {
   readTime: string;
   image: string;
   url: string;
+  slug: string;
 };
 
 export const articleSchema = z.object({
@@ -120,5 +121,6 @@ export const articleSchema = z.object({
   date: z.string(),
   readTime: z.string(),
   image: z.string(),
-  url: z.string().url(),
+  url: z.string(),
+  slug: z.string(),
 });
