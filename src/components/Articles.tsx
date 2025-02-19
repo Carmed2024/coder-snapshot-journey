@@ -1,7 +1,7 @@
-
 import { type Article, type ArticleCategory } from "@/types";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const articles: Article[] = [
   {
@@ -51,10 +51,17 @@ export const Articles = () => {
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
             Stay up to date with the latest in AI and technology developments
           </p>
+          <Link 
+            to="/tech-insights"
+            className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mt-4"
+          >
+            View All Articles
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {articles.map((article, index) => (
+          {articles.slice(0, 4).map((article, index) => (
             <motion.article
               key={article.title}
               initial={{ opacity: 0, y: 20 }}

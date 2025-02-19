@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import TechInsights from "./pages/TechInsights";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,13 @@ const AppContent = (): JSX.Element => {
         <Route path="/" element={
           <TooltipProvider>
             <Index />
+            <Toaster />
+            <Sonner />
+          </TooltipProvider>
+        } />
+        <Route path="/tech-insights" element={
+          <TooltipProvider>
+            <TechInsights />
             <Toaster />
             <Sonner />
           </TooltipProvider>
