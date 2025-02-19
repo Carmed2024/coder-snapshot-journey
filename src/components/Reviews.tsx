@@ -1,3 +1,4 @@
+
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -49,7 +50,10 @@ const pastelColors = [
 
 type AutoScrollPluginType = {
   name: string;
-  options: { delay: number };
+  options?: {
+    active?: boolean;
+    breakpoints?: { [key: string]: { active?: boolean } };
+  };
   init: (embla: UseEmblaCarouselType[1]) => void;
   destroy: () => void;
   pointerDown: () => void;
@@ -78,7 +82,10 @@ const autoScrollPlugin = (delay = 4000): AutoScrollPluginType => {
 
   return {
     name: 'autoScroll',
-    options: { delay },
+    options: {
+      active: true,
+      breakpoints: {}
+    },
     init: (embla) => {
       autoplay(embla);
     },
