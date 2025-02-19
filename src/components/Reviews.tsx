@@ -1,7 +1,7 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import useEmblaCarousel, { type EmblaCarouselType, type EmblaPluginType } from "embla-carousel-react";
+import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
 const reviews = [
@@ -47,10 +47,20 @@ const pastelColors = [
   "bg-[#D3E4FD]", // Soft Blue
 ];
 
-const autoScrollPlugin = (delay = 4000): EmblaPluginType => {
+type AutoScrollPluginType = {
+  name: string;
+  options: { delay: number };
+  init: (embla: UseEmblaCarouselType[1]) => void;
+  destroy: () => void;
+  pointerDown: () => void;
+  pointerUp: (embla: UseEmblaCarouselType[1]) => void;
+  settle: (embla: UseEmblaCarouselType[1]) => void;
+};
+
+const autoScrollPlugin = (delay = 4000): AutoScrollPluginType => {
   let intervalId: ReturnType<typeof setInterval>;
   
-  const autoplay = (embla: EmblaCarouselType) => {
+  const autoplay = (embla: UseEmblaCarouselType[1]) => {
     if (!embla) return;
     
     intervalId = setInterval(() => {
