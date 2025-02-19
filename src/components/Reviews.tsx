@@ -1,7 +1,8 @@
+
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
+import useEmblaCarousel, { type EmblaOptionsType } from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
 const reviews = [
@@ -47,55 +48,64 @@ const pastelColors = [
   "bg-[#D3E4FD]", // Soft Blue
 ];
 
+type AutoScrollPluginType = {
+  init: () => void;
+  destroy: () => void;
+  pointerDown: () => void;
+  pointerUp: () => void;
+};
+
+const autoScrollPlugin = (delay: number = 4000): AutoScrollPluginType => (emblaApi) => {
+  let timer: ReturnType<typeof setTimeout>;
+  let rafId: number;
+
+  const play = () => {
+    stop();
+    timer = setTimeout(() => {
+      rafId = requestAnimationFrame(() => {
+        if (!emblaApi.canScrollNext()) {
+          emblaApi.scrollTo(0);
+        } else {
+          emblaApi.scrollNext();
+        }
+        play();
+      });
+    }, delay);
+  };
+
+  const stop = () => {
+    clearTimeout(timer);
+    cancelAnimationFrame(rafId);
+  };
+
+  return {
+    init: play,
+    destroy: stop,
+    pointerDown: stop,
+    pointerUp: play,
+  };
+};
+
 export const Reviews = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const options: EmblaOptionsType = {
     loop: true,
     align: "start",
     slidesToScroll: 1,
     breakpoints: {
       '(min-width: 768px)': { slidesToScroll: 2 }
     }
-  }, [
-    // Auto-scroll plugin
-    (emblaRoot) => {
-      let timer: ReturnType<typeof setTimeout>;
-      let rafId: number;
+  };
 
-      function autoScroll() {
-        if (!emblaRoot.canScrollNext()) {
-          emblaRoot.scrollTo(0);
-        } else {
-          emblaRoot.scrollNext();
-        }
-        schedule();
-      }
-
-      function schedule() {
-        timer = setTimeout(() => {
-          rafId = requestAnimationFrame(autoScroll);
-        }, 4000);
-      }
-
-      return {
-        init: () => schedule(),
-        destroy: () => {
-          clearTimeout(timer);
-          cancelAnimationFrame(rafId);
-        },
-        pointerDown: () => {
-          clearTimeout(timer);
-          cancelAnimationFrame(rafId);
-        },
-        pointerUp: () => schedule(),
-      };
-    },
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    options,
+    [autoScrollPlugin()]
+  );
 
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
