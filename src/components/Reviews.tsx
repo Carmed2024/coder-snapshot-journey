@@ -1,5 +1,8 @@
-
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback, useEffect, useState } from "react";
 
 const reviews = [
   {
@@ -7,25 +10,106 @@ const reviews = [
     role: "Product Manager at TechCorp",
     content:
       "John is an exceptional engineer who consistently delivers high-quality work. His attention to detail and problem-solving skills are outstanding.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&auto=format&fit=crop",
   },
   {
     name: "Michael Chen",
     role: "CTO at StartupX",
     content:
       "Working with John was a pleasure. His technical expertise and ability to communicate complex concepts clearly made our project a success.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&auto=format&fit=crop",
   },
   {
     name: "Emily Rodriguez",
     role: "Engineering Lead at InnovateCo",
     content:
       "John's dedication to writing clean, maintainable code and his collaborative approach make him an invaluable team member.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&auto=format&fit=crop",
+  },
+  {
+    name: "David Smith",
+    role: "Senior Developer at TechGiant",
+    content:
+      "An outstanding collaborator with deep technical knowledge. John's ability to solve complex problems while maintaining code quality is remarkable.",
+  },
+  {
+    name: "Lisa Wang",
+    role: "Project Lead at InnovateHub",
+    content:
+      "John's technical expertise and dedication to quality make him a standout engineer. His collaborative approach ensures project success.",
   },
 ];
 
+const pastelColors = [
+  "bg-[#F2FCE2]", // Soft Green
+  "bg-[#FEF7CD]", // Soft Yellow
+  "bg-[#FEC6A1]", // Soft Orange
+  "bg-[#E5DEFF]", // Soft Purple
+  "bg-[#FFDEE2]", // Soft Pink
+  "bg-[#FDE1D3]", // Soft Peach
+  "bg-[#D3E4FD]", // Soft Blue
+];
+
 export const Reviews = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    slidesToScroll: 1,
+    breakpoints: {
+      '(min-width: 768px)': { slidesToScroll: 2 }
+    }
+  }, [
+    // Auto-scroll plugin
+    (emblaRoot) => {
+      let timer: ReturnType<typeof setTimeout>;
+      let rafId: number;
+
+      function autoScroll() {
+        if (!emblaRoot.canScrollNext()) {
+          emblaRoot.scrollTo(0);
+        } else {
+          emblaRoot.scrollNext();
+        }
+        schedule();
+      }
+
+      function schedule() {
+        timer = setTimeout(() => {
+          rafId = requestAnimationFrame(autoScroll);
+        }, 4000);
+      }
+
+      return {
+        init: () => schedule(),
+        destroy: () => {
+          clearTimeout(timer);
+          cancelAnimationFrame(rafId);
+        },
+        pointerDown: () => {
+          clearTimeout(timer);
+          cancelAnimationFrame(rafId);
+        },
+        pointerUp: () => schedule(),
+      };
+    },
+  ]);
+
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setPrevBtnEnabled(emblaApi.canScrollPrev());
+    setNextBtnEnabled(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
+
   return (
     <section className="py-20 px-4" id="reviews">
       <div className="max-w-6xl mx-auto">
@@ -35,29 +119,58 @@ export const Reviews = () => {
           </span>
           <h2 className="text-3xl font-bold mt-4">Client Reviews</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((review, index) => (
-            <Card
-              key={review.name}
-              className="p-6 backdrop-blur-sm bg-white/50 hover:bg-white/80 transition-colors animate-fade-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <img
-                    src={review.image}
-                    alt={review.name}
-                    className="w-full h-full object-cover"
-                  />
+
+        <div className="relative">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-6">
+              {reviews.map((review, index) => (
+                <div 
+                  key={review.name}
+                  className="flex-[0_0_90%] min-w-0 md:flex-[0_0_40%] pl-4"
+                >
+                  <Card
+                    className={`h-full p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
+                      pastelColors[index % pastelColors.length]
+                    }`}
+                  >
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-xl font-bold">{review.name}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {review.role}
+                        </p>
+                      </div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {review.content}
+                      </p>
+                    </div>
+                  </Card>
                 </div>
-                <div>
-                  <h3 className="font-semibold">{review.name}</h3>
-                  <p className="text-sm text-muted-foreground">{review.role}</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground">{review.content}</p>
-            </Card>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-background/80 backdrop-blur-sm"
+            onClick={scrollPrev}
+            disabled={!prevBtnEnabled}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Previous review</span>
+          </Button>
+
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-background/80 backdrop-blur-sm"
+            onClick={scrollNext}
+            disabled={!nextBtnEnabled}
+          >
+            <ArrowRight className="h-4 w-4" />
+            <span className="sr-only">Next review</span>
+          </Button>
         </div>
       </div>
     </section>
