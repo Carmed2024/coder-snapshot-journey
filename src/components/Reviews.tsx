@@ -2,7 +2,7 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import useEmblaCarousel, { type EmblaOptionsType } from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
 const reviews = [
@@ -48,56 +48,49 @@ const pastelColors = [
   "bg-[#D3E4FD]", // Soft Blue
 ];
 
-type AutoScrollPluginType = {
-  init: () => void;
-  destroy: () => void;
-  pointerDown: () => void;
-  pointerUp: () => void;
-};
-
-const autoScrollPlugin = (delay: number = 4000): AutoScrollPluginType => (emblaApi) => {
+const autoScrollPlugin = (delay = 4000) => (emblaRoot) => {
   let timer: ReturnType<typeof setTimeout>;
   let rafId: number;
 
-  const play = () => {
+  function play() {
     stop();
     timer = setTimeout(() => {
       rafId = requestAnimationFrame(() => {
-        if (!emblaApi.canScrollNext()) {
-          emblaApi.scrollTo(0);
+        if (!emblaRoot.canScrollNext()) {
+          emblaRoot.scrollTo(0);
         } else {
-          emblaApi.scrollNext();
+          emblaRoot.scrollNext();
         }
         play();
       });
     }, delay);
-  };
+  }
 
-  const stop = () => {
+  function stop() {
     clearTimeout(timer);
     cancelAnimationFrame(rafId);
-  };
+  }
 
   return {
+    name: 'autoScroll',
+    options: { delay },
     init: play,
     destroy: stop,
-    pointerDown: stop,
-    pointerUp: play,
+    onPointerDown: stop,
+    onInit: play,
   };
 };
 
 export const Reviews = () => {
-  const options: EmblaOptionsType = {
-    loop: true,
-    align: "start",
-    slidesToScroll: 1,
-    breakpoints: {
-      '(min-width: 768px)': { slidesToScroll: 2 }
-    }
-  };
-
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    options,
+    {
+      loop: true,
+      align: "start",
+      slidesToScroll: 1,
+      breakpoints: {
+        '(min-width: 768px)': { slidesToScroll: 2 }
+      }
+    },
     [autoScrollPlugin()]
   );
 
