@@ -1,4 +1,3 @@
-
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -48,36 +47,42 @@ const pastelColors = [
   "bg-[#D3E4FD]", // Soft Blue
 ];
 
-const autoScrollPlugin = (delay = 4000) => (emblaRoot) => {
-  let timer: ReturnType<typeof setTimeout>;
-  let rafId: number;
+const autoScrollPlugin = (delay = 4000) => {
+  let rafId = 0;
+  let timer = 0;
 
-  function play() {
+  const play = (emblaApi) => {
     stop();
-    timer = setTimeout(() => {
-      rafId = requestAnimationFrame(() => {
-        if (!emblaRoot.canScrollNext()) {
-          emblaRoot.scrollTo(0);
-        } else {
-          emblaRoot.scrollNext();
-        }
-        play();
-      });
+    timer = window.setTimeout(() => {
+      if (!emblaApi.canScrollNext()) {
+        emblaApi.scrollTo(0);
+      } else {
+        emblaApi.scrollNext();
+      }
+      rafId = window.requestAnimationFrame(() => play(emblaApi));
     }, delay);
-  }
+  };
 
-  function stop() {
-    clearTimeout(timer);
-    cancelAnimationFrame(rafId);
-  }
+  const stop = () => {
+    window.clearTimeout(timer);
+    window.cancelAnimationFrame(rafId);
+  };
 
-  return {
-    name: 'autoScroll',
-    options: { delay },
-    init: play,
-    destroy: stop,
-    onPointerDown: stop,
-    onInit: play,
+  const setup = (emblaApi) => {
+    play(emblaApi);
+    emblaApi.on('pointerDown', stop);
+    emblaApi.on('init', () => play(emblaApi));
+  };
+
+  const destroy = () => {
+    stop();
+  };
+
+  return (emblaRoot) => {
+    return {
+      setup,
+      destroy,
+    };
   };
 };
 
@@ -111,6 +116,11 @@ export const Reviews = () => {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   return (
